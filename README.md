@@ -26,8 +26,7 @@ context.resolveWithParams<Bloc>((id: _id));
 ```
 
 Scopes based on widget tree lifecycle:
-![@VideoToGifConverterBot.mp4](%40VideoToGifConverterBot.mp4)
-
+![scope_dispose_example.gif](scope_dispose_example.gif)
 
 ## Getting started
 Create a feature class that extends `FeatureDependencies` and override `register` method.
