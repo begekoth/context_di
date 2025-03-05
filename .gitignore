@@ -1,0 +1,5 @@
+/lib/example/.dart_tool/
+/lib/example/pubspec.lock
+/pubspec.lock
+/.dart_tool/
+/.idea/
