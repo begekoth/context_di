@@ -26,7 +26,7 @@ context.resolveWithParams<Bloc>((id: _id));
 ```
 
 Scopes based on widget tree lifecycle:
-![scope_dispose_example.gif](scope_dispose_example.gif)
+![dispose.gif](dispose.gif)
 
 ## Getting started
 Create a feature class that extends `FeatureDependencies` and override `register` method.
