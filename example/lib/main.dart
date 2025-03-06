@@ -1,6 +1,6 @@
+import 'package:context_di/context_di.dart';
 import 'package:flutter/material.dart';
 
-import '../../context_di.dart';
 import 'features/logger/logger.dart';
 import 'router.dart';
 

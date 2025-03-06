@@ -28,7 +28,7 @@ dev_dependencies:
 
 dependency_overrides:
   context_di:
-    path: ../../
+    path: ../
 
 flutter:
   uses-material-design: true

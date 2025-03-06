@@ -1,7 +1,6 @@
 import 'dart:async';
 
-import 'package:context_di/example/lib/features/logger/logger.dart';
-
+import '../../../logger/logger.dart';
 import '../../domain/domain.dart';
 
 class Repository implements RepositoryInterface {
