@@ -7,7 +7,7 @@ abstract class FeatureDependencies extends StatelessWidget {
   const FeatureDependencies({super.key, this.builder});
   final Widget Function (BuildContext context)? builder;
 
-  List<Registration> register(BuildContext context);
+  List<Registration> register();
 
   Registration registerFactory<T>(T Function(BuildContext context) create) {
     return FactoryRegistration<T>(create);
@@ -27,7 +27,7 @@ abstract class FeatureDependencies extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final registrations = register(context);
+    final registrations = register();
     final builder = this.builder;
 
     return MultiProvider(

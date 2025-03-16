@@ -32,7 +32,7 @@ class _RootDependencies extends FeatureDependencies {
   const _RootDependencies({super.builder});
 
   @override
-  List<Registration> register(BuildContext context) {
+  List<Registration> register() {
     return [
       registerSingleton<Logger>((_) => Logger()),
     ];

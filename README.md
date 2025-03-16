@@ -10,9 +10,9 @@ For general information about developing packages, see the Dart guide for
 and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/to/develop-packages).
 -->
-
+[![pub package](https://img.shields.io/pub/v/context_di.svg)](https://pub.dev/packages/context_di)
 Project is based on [Provider](https://pub.dev/packages/provider) package.
-Main goal is to create a tool that will help to reduce boilerplate code and
+Main goal is to create a tool that will help reduce boilerplate code and
 make it easier to work with dependency injection via Provider.
 
 ## Features
@@ -22,7 +22,7 @@ make it easier to work with dependency injection via Provider.
 
 Parameterized factories
 ```dart
-context.resolveWithParams<Bloc>((id: _id));
+final bloc = context.resolveWithParams<Bloc>((id: _id));
 ```
 
 Scopes based on widget tree lifecycle:
@@ -51,7 +51,7 @@ class BasicFeature extends FeatureDependencies {
       registerParamsFactory(
         (context, EntityBlocParams params) => EntityBloc(
           params.id,
-          context.resolve<RepositoryInterface>(),
+          context.resolve(),
         ),
       ),
     ];
@@ -129,12 +129,12 @@ class EntityPage extends StatelessWidget {
 
 basic resolve
 ```dart
- _listBloc = context.resolve<ListBloc>();
+ final listBloc = context.resolve<ListBloc>();
 ```
 
 parametrized resolve
 ```dart
- create: (_) => context.resolveWithParams((id: _id)),
+ var create = (_) => context.resolveWithParams((id: _id));
 ```
 
 ## Additional information

@@ -1,5 +1,4 @@
 import 'package:context_di/context_di.dart';
-import 'package:flutter/material.dart';
 
 import '../data/repositories/repository.dart';
 import '../domain/domain.dart';
@@ -12,19 +11,19 @@ class BasicFeature extends FeatureDependencies {
   const BasicFeature({super.key, super.builder});
 
   @override
-  List<Registration> register(BuildContext context) {
+  List<Registration> register() {
     return [
       registerSingletonAs<Repository, RepositoryInterface>(
         (context) => Repository(context.resolve()),
         dispose: (context, instance) => instance.dispose(),
       ),
       registerFactory(
-        (context) => ListBloc(context.resolve<RepositoryInterface>()),
+        (context) => ListBloc(context.resolve()),
       ),
       registerParamsFactory(
         (context, EntityBlocParams params) => EntityBloc(
           params.id,
-          context.resolve<RepositoryInterface>(),
+          context.resolve(),
         ),
       ),
     ];

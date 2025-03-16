@@ -1,3 +1,6 @@
-## 0.0.1
+## 0.1.1-Preview
 
-* TODO: Describe initial release.
+removed context from overridable register method
+removed T from abstract [Registration] class
+
+docs fixes

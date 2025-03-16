@@ -1,10 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-sealed class Registration<T> {
+sealed class Registration {
   const Registration();
 
-  Provider<T> get provider;
+  Provider<dynamic> get provider;
 }
 
 class SingletonRegistration<T> extends Registration {
