@@ -1,0 +1,34 @@
+name: example
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+environment:
+  sdk: ^3.6.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  freezed_annotation:
+  flutter_bloc:
+  context_di:
+    path: ../
+
+  cupertino_icons:
+  auto_route: ^10.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  freezed:
+  flutter_gen:
+
+  flutter_lints: ^5.0.0
+  build_runner: ^2.4.14
+  auto_route_generator: ^10.0.1
+  context_di_generator:
+    path: ../../context_di_generator
+
+flutter:
+  uses-material-design: true
+

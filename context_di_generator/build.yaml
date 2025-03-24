@@ -1,0 +1,16 @@
+targets:
+  $default:
+    builders:
+      context_di|feature:
+        enabled: true
+        generate_for:
+          - lib/features/**.dart
+          - example/lib/features/**.dart
+
+builders:
+  feature:
+    import: "package:context_di_generator/builder.dart"
+    builder_factories: ["featureBuilder"]
+    build_extensions: {".dart": [".feature.dart"]}
+    auto_apply: dependents
+    build_to: source
