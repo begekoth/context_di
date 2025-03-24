@@ -31,7 +31,7 @@ Scopes based on widget tree lifecycle:
 
 ## Added Code Generation
 
-add [build_runner](https://pub.dev/packages/build_runner) and [context_di_generator] to your project
+add [build_runner](https://pub.dev/packages/build_runner) and [context_di_generator](https://pub.dev/packages/context_di_generator) to your project
 ```yaml
 dev_dependencies:
   build_runner:
@@ -41,7 +41,7 @@ dev_dependencies:
 create empty feature class that extends [FeatureDependencies](https://pub.dev/documentation/context_di/latest/context_di/FeatureDependencies-class.html)
 with _$<FeatureName>FeatureMixin
 ```dart
-part 'basic.feature.dart';
+part 'basic.g.dart';
 
 typedef EntityBlocParams = ({int id});
 

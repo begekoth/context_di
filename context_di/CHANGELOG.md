@@ -1,4 +1,3 @@
-## 0.2.0-Preview
+## 0.2.1-Preview
 
-Added Code Generation with example 
-
+Documentation update

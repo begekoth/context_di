@@ -1,3 +1,4 @@
-## 0.0.0-Preview
+## 0.0.1-Preview
 
-Initial release
+fixed empty constructor generation
+generated file extension changed to .g.dart

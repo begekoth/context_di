@@ -5,5 +5,5 @@ import 'generator/feature_generator.dart';
 
 Builder featureBuilder(BuilderOptions options) => LibraryBuilder(
       FeatureGenerator(),
-      generatedExtension: '.feature.dart',
+      generatedExtension: '.g.dart',
     );

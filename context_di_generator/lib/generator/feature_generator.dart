@@ -49,20 +49,34 @@ class FeatureGenerator extends GeneratorForAnnotation<Feature> {
 
           if (asValue != null) {
             buffer.writeln('      registerSingletonAs<$typeValue, $asValue>(');
-            buffer.writeln('        (context) => $typeValue(');
-            buffer.writeln(
-                '          ${_generateConstructorParams(typeElement, typeValue)},');
-            buffer.writeln('        ),');
+
+            if (typeElement.constructors.first.parameters.isEmpty) {
+              buffer.writeln('        (context) => $typeValue(),');
+            }
+            else {
+              buffer.writeln('        (context) => $typeValue(');
+              buffer.writeln(
+                  '          ${_generateConstructorParams(typeElement, typeValue)},');
+              buffer.writeln('        ),');
+            }
+
             if (dispose != null) {
               buffer.writeln('        dispose: $dispose,');
             }
             buffer.writeln('      ),');
           } else {
             buffer.writeln('      registerSingleton(');
-            buffer.writeln('        (context) => $typeValue(');
-            buffer.writeln(
-                '          ${_generateConstructorParams(typeElement, typeValue)},');
-            buffer.writeln('        ),');
+
+            if (typeElement.constructors.first.parameters.isEmpty) {
+              buffer.writeln('        (context) => $typeValue(),');
+            }
+            else {
+              buffer.writeln('        (context) => $typeValue(');
+              buffer.writeln(
+                  '          ${_generateConstructorParams(typeElement, typeValue)},');
+              buffer.writeln('        ),');
+            }
+
             if (dispose != null) {
               buffer.writeln('        dispose: $dispose,');
             }
@@ -76,10 +90,17 @@ class FeatureGenerator extends GeneratorForAnnotation<Feature> {
               reader.read('type').typeValue.element as ClassElement;
           if (paramsTypeValue == null) {
             buffer.writeln('      registerFactory(');
-            buffer.writeln('        (context) => $typeValue(');
-            buffer.writeln(
-                '          ${_generateConstructorParams(typeElement, typeValue)},');
-            buffer.writeln('        ),');
+
+            if (typeElement.constructors.first.parameters.isEmpty) {
+              buffer.writeln('        (context) => $typeValue(),');
+            }
+            else {
+              buffer.writeln('        (context) => $typeValue(');
+              buffer.writeln(
+                  '          ${_generateConstructorParams(typeElement, typeValue)},');
+              buffer.writeln('        ),');
+            }
+
             buffer.writeln('      ),');
             break;
           }
