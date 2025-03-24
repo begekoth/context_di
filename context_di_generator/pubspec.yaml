@@ -8,7 +8,7 @@ environment:
 
 dependencies:
 
-  context_di: ^0.1.2-Preview
+  context_di: ^0.2.0-Preview
   source_gen: ^2.0.0
   build_runner: ^2.4.15
   build: ^2.4.1

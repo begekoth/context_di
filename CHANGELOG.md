@@ -1,4 +1,4 @@
-## 0.1.2-Preview
+## 0.2.0-Preview
 
 Added Code Generation with example 
 
