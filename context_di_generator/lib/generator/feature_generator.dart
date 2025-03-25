@@ -18,12 +18,6 @@ class FeatureGenerator extends GeneratorForAnnotation<Feature> {
 
     final buffer = StringBuffer();
 
-    // Add imports
-    buffer.writeln('// GENERATED CODE - DO NOT MODIFY BY HAND');
-    buffer.writeln();
-    buffer.writeln('part of \'${element.source.shortName}\';');
-    buffer.writeln();
-
     buffer.writeln(
         'mixin _\$${element.name}FeatureMixin on FeatureDependencies {');
     buffer.writeln('  @override');
