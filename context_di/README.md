@@ -23,7 +23,7 @@ make it easier to work with dependency injection via Provider.
 
 Parameterized factories
 ```dart
-final bloc = context.resolveWithParams<Bloc>((id: _id));
+final bloc = context.read<CreateEntityBloc>()(context, (id: _id));
 ```
 
 Scopes based on widget tree lifecycle:
@@ -39,9 +39,9 @@ dev_dependencies:
 ```
 
 create empty feature class that extends [FeatureDependencies](https://pub.dev/documentation/context_di/latest/context_di/FeatureDependencies-class.html)
-with _$<FeatureName>FeatureMixin
+with _$(ClassName)Mixin
 ```dart
-part 'basic.g.dart';
+part 'basic_feature.g.dart';
 
 typedef EntityBlocParams = ({int id});
 
@@ -51,12 +51,54 @@ void _dispose(BuildContext context, Repository instance) => instance.dispose();
 @Singleton(Repository, as: RepositoryInterface, dispose: _dispose)
 @Factory(ListBloc)
 @Factory(EntityBloc, params: EntityBlocParams)
-class Basic extends FeatureDependencies with _$BasicFeatureMixin {
+class BasicFeature extends FeatureDependencies with _$BasicFeatureMixin {
   const Basic({super.key, super.builder});
 }
 ```
 
 then run `dart run build_runner build -d` to generate feature file
+
+generation could be combined with manual registration approach
+```dart
+@Feature()
+@Singleton(SupabaseAuthUtils)
+@Singleton(GetUserHandler)
+@Singleton(SupabaseAuthApi)
+@Singleton(AuthRepository, as: IAuthRepository)
+@Singleton(ExternalOpenUrl)
+class AppFeature extends FeatureDependencies with _$AppFeatureMixin {
+  const AppFeature(this.initialDependencies, {super.key, super.builder});
+
+  final List<Registration> initialDependencies;
+
+  @override
+  List<Registration> register() => [
+    ...initialDependencies, //some initial dependencies
+    ...super.register(), //generated dependencies
+    registerSingleton<AppBloc>(
+            (c) => AppBloc(c.resolve(), c), dispose: (c, bloc) => bloc.close()
+    ), //manual registration
+  ];
+}
+```
+
+# Resolve approach
+
+Now better approach is use code generation and resolve like this:
+
+factories:
+```dart
+final bloc = context.read<CreateListBloc>()(context);
+
+final bloc = context.read<CreateEntityBloc>()(context, (id: _id));
+```
+`CreateListBloc` and `CreateEntityBloc` will be generated
+
+singletons:
+```dart
+final repo = contex.read<RepositoryInterface>();
+```
+old `context.resolve<T>()` approach still works
 
 ## Getting started
 Create a feature class that extends `FeatureDependencies` and override `register` method.
@@ -104,7 +146,7 @@ class BasicFeaturePage extends StatelessWidget {
 }
 ```
 
-And resolve dependencies in feature co
+And resolve dependencies in feature context
 ```dart
 class _Content extends StatefulWidget {
   const _Content();
@@ -120,7 +162,8 @@ class _ContentState extends State<_Content> {
 
   @override
   void initState() {
-    _listBloc = context.resolve<ListBloc>();
+    _listBloc = context.resolve<ListBloc>(); //old approach
+    _listBloc = context.read<CreateListBloc>()(context); //new approach
     super.initState();
   }
 
@@ -159,12 +202,14 @@ class EntityPage extends StatelessWidget {
 
 basic resolve
 ```dart
- final listBloc = context.resolve<ListBloc>();
+ final listBloc = context.resolve<ListBloc>(); //old approach
+ final listBloc = context.read<CreateListBloc>()(context); //new approach
 ```
 
 parametrized resolve
 ```dart
- var create = (_) => context.resolveWithParams((id: _id));
+ var create = (_) => context.resolveWithParams((id: _id)); //old approach
+ var create = (_) => context.read<CreateEntityBloc>()(context, (id: _id)); //new approach
 ```
 
 ## Additional information

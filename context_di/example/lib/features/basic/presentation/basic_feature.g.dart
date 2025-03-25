@@ -1,13 +1,14 @@
-// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'basic_feature.dart';
 
 // **************************************************************************
 // FeatureGenerator
 // **************************************************************************
 
-// GENERATED CODE - DO NOT MODIFY BY HAND
+typedef CreateListBloc = ListBloc Function(BuildContext);
 
-part of 'basic.dart';
+typedef CreateEntityBloc = EntityBloc Function(BuildContext, ({int id}));
 
 mixin _$BasicFeatureMixin on FeatureDependencies {
   @override

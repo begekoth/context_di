@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _RootDependencies(
-      builder: (context) => MaterialApp.router(
+      child: MaterialApp.router(
         title: 'Flutter Demo',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
 }
 
 class _RootDependencies extends FeatureDependencies {
-  const _RootDependencies({super.builder});
+  const _RootDependencies({super.child});
 
   @override
   List<Registration> register() {

@@ -1,6 +1,21 @@
-## 0.2.1-Preview
+## 0.2.2-Preview
 
-Added Code Generation with example 
+Changed factory handling
 
-fixed empty constructor generation
-generated file extension changed to .g.dart
+now better approach is use code generation and resolve like this:
+
+factories:
+```dart
+final bloc = context.read<CreateListBloc>()(context);
+
+final bloc = context.read<CreateEntityBloc>()(context, (id: _id));
+```
+`CreateListBloc` and `CreateEntityBloc` will be generated
+
+singletons:
+```dart
+final repo = contex.read<RepositoryInterface>();
+```
+old `resolve` approach still works
+
+add child to FeatureDependencies and changed builder to more like MultiProvider

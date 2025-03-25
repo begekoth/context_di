@@ -1,8 +1,14 @@
 name: context_di
 description: "Flutter Provider based Dependency Injection Tool
 supports two main scopes factory and singleton with code generation"
-version: 0.2.1-Preview
+version: 0.2.2-Preview
 homepage: https://github.com/begekoth/context_di
+topics:
+  - dependency
+  - injection
+  - dependency-injection
+  - provider
+  - flutter
 
 environment:
   sdk: ^3.6.0

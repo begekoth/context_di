@@ -1,6 +1,7 @@
 /// Annotation to mark a class as a feature
 class Feature {
-  const Feature();
+  final bool generateFactoryTypes;
+  const Feature({this.generateFactoryTypes = true});
 }
 
 /// Annotation to register a singleton dependency

@@ -18,6 +18,26 @@ class FeatureGenerator extends GeneratorForAnnotation<Feature> {
 
     final buffer = StringBuffer();
 
+    if (annotation.read('generateFactoryTypes').boolValue) {
+      for (final annotation in element.metadata) {
+        final type = annotation.element?.enclosingElement3?.displayName;
+
+        if (type == 'Factory') {
+          final reader = ConstantReader(annotation.computeConstantValue());
+          final typeValue = reader.read('type').typeValue.getDisplayString();
+          final paramsTypeValue =
+          reader.peek('params')?.typeValue.getDisplayString();
+
+          if (paramsTypeValue != null) {
+            buffer.writeln("typedef Create${typeValue} = ${typeValue} Function(BuildContext, ${paramsTypeValue});\n");
+            continue;
+          }
+
+          buffer.writeln("typedef Create$typeValue = $typeValue Function(BuildContext);\n");
+        }
+      }
+    }
+
     buffer.writeln(
         'mixin _\$${element.name}Mixin on FeatureDependencies {');
     buffer.writeln('  @override');
@@ -168,6 +188,9 @@ class FeatureGenerator extends GeneratorForAnnotation<Feature> {
     }
 
     return constructor.parameters.map((param) {
+      if (param.type.element3?.name == 'BuildContext')
+        return ifNamed(param, 'context');
+
       if (paramsTypeValue != null) {
         final paramName = param.name;
         // Remove leading underscore for private fields

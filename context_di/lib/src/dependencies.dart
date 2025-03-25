@@ -1,11 +1,13 @@
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
+import '../utils.dart';
 import 'registrations.dart';
 
 abstract class FeatureDependencies extends StatelessWidget {
-  const FeatureDependencies({super.key, this.builder});
-  final Widget Function(BuildContext context)? builder;
+  const FeatureDependencies({super.key, this.builder, this.child});
+  final Widget Function(BuildContext, Widget?)? builder;
+  final Widget? child;
 
   List<Registration> register();
 
@@ -32,11 +34,14 @@ abstract class FeatureDependencies extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final registrations = register();
-    final builder = this.builder;
 
-    return MultiProvider(providers: [
-      ...registrations.map((e) => e.provider),
-    ], builder: builder != null ? (context, _) => builder(context) : null);
+    return MultiProvider(
+      providers: [
+        ...registrations.map((e) => e.provider),
+      ],
+      builder: builder,
+      child: child,
+    );
   }
 }
 
@@ -44,10 +49,10 @@ extension FeatureContextExtension<F extends FeatureDependencies>
     on BuildContext {
   T resolve<T>() {
     try {
-      final factory = Provider.of<FactoryRegistration<T>?>(this, listen: false);
+      final factory = Provider.of<Factory<T>?>(this, listen: false);
 
       if (factory != null) {
-        return factory.create(this);
+        return factory(this);
       }
 
       final singleton = Provider.of<T>(this, listen: false);
@@ -60,10 +65,9 @@ extension FeatureContextExtension<F extends FeatureDependencies>
 
   T resolveWithParams<T, P>(P params) {
     try {
-      final factory =
-          Provider.of<ParamsFactoryRegistration<T, P>>(this, listen: false);
+      final factory = Provider.of<ParamsFactory<T, P>>(this, listen: false);
 
-      return factory.create(this, params);
+      return factory(this, params);
     } on ProviderNotFoundException {
       throw Exception("Class $T probably not registered");
     }

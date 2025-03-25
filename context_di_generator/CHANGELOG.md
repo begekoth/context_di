@@ -1,3 +1,5 @@
-## 0.0.2-Preview
+## 0.1.0-Preview
 
-fixed build.yaml and generator config
+added support for generating factory types
+
+fixed context.resolve<BuildContext>() handling

@@ -1,6 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
+import '../utils.dart';
+
 sealed class Registration {
   const Registration();
 
@@ -40,21 +42,21 @@ class SingletonAsRegistration<I extends T, T> extends Registration {
 }
 
 class FactoryRegistration<T> extends Registration {
-  final T Function(BuildContext context) create;
+  final Factory<T> factory;
 
   @override
-  Provider<FactoryRegistration<T>> get provider =>
-      Provider(create: (_) => this);
+  Provider<Factory<T>> get provider =>
+      Provider(create: (_) => factory);
 
-  FactoryRegistration(this.create);
+  FactoryRegistration(this.factory);
 }
 
 class ParamsFactoryRegistration<T, P> extends Registration {
-  final T Function(BuildContext context, P params) create;
+  final ParamsFactory<T, P> factory;
 
   @override
-  Provider<ParamsFactoryRegistration<T, P>> get provider =>
-      Provider(create: (_) => this);
+  Provider<ParamsFactory<T, P>> get provider =>
+      Provider(create: (_) => factory);
 
-  ParamsFactoryRegistration(this.create);
+  ParamsFactoryRegistration(this.factory);
 }

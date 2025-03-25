@@ -1,11 +1,10 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:context_di/context_di.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../router.dart';
-import 'basic.dart';
+import 'basic_feature.dart';
 import 'managers/list_bloc.dart';
 
 @RoutePage()
@@ -14,9 +13,7 @@ class BasicFeaturePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Basic(builder: (context) {
-      return _Content();
-    });
+    return BasicFeature(child: _Content());
   }
 }
 
@@ -34,7 +31,7 @@ class _ContentState extends State<_Content> {
 
   @override
   void initState() {
-    _listBloc = context.resolve<ListBloc>();
+    _listBloc = context.read<CreateListBloc>()(context);
     super.initState();
   }
 

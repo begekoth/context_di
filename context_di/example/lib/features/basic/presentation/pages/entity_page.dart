@@ -1,8 +1,8 @@
 import 'package:auto_route/annotations.dart';
-import 'package:context_di/context_di.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../basic_feature.dart';
 import '../managers/entity_bloc.dart';
 
 @RoutePage()
@@ -14,7 +14,7 @@ class EntityPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<EntityBloc>(
-      create: (_) => context.resolveWithParams((id: _id)),
+      create: (_) => context.read<CreateEntityBloc>()(context, (id: _id)),
       child: BlocBuilder<EntityBloc, EntityState>(builder: (context, state) {
         return Scaffold(
           body: switch (state) {
