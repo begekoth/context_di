@@ -19,7 +19,7 @@ class FeatureGenerator extends GeneratorForAnnotation<Feature> {
     final buffer = StringBuffer();
 
     buffer.writeln(
-        'mixin _\$${element.name}FeatureMixin on FeatureDependencies {');
+        'mixin _\$${element.name}Mixin on FeatureDependencies {');
     buffer.writeln('  @override');
     buffer.writeln('  List<Registration> register() {');
     buffer.writeln('    return [');
