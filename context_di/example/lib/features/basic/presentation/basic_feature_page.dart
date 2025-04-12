@@ -59,8 +59,7 @@ class _ContentState extends State<_Content> {
         child: AutoRouter.declarative(
             routes: (_) => [
                   ListRoute(),
-                  if (_selectedId != null)
-                    EntityRoute(id: _selectedId!),
+                  if (_selectedId != null) EntityRoute(id: _selectedId!),
                 ],
             onPopRoute: (_, __) {
               _listBloc.add(ListEvent.select(null));

@@ -29,21 +29,18 @@ class EntityPage extends StatelessWidget {
 
 class _Content extends StatelessWidget {
   final Loaded _entityState;
-  
+
   const _Content(this._entityState);
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverAppBar.large(
-          title: Text(_entityState.title),
-        ),
-        SliverFillRemaining(
-          child: Center(child: Text(_entityState.subtitle)),
-        )
-      ]
-    );
+    return CustomScrollView(slivers: [
+      SliverAppBar.large(
+        title: Text(_entityState.title),
+      ),
+      SliverFillRemaining(
+        child: Center(child: Text(_entityState.subtitle)),
+      )
+    ]);
   }
 }
-

@@ -27,23 +27,23 @@ class ListPage extends StatelessWidget {
       body: switch (state) {
         Initial() => Placeholder(),
         Loaded(:final list) => Scaffold(
-          body: ListView.builder(
-            itemCount: list.length,
-            itemBuilder: (context, index) {
-              if (Platform.isIOS) {
-                return CupertinoListTile(
-                  title: Text(list[index].id.toString()),
+            body: ListView.builder(
+              itemCount: list.length,
+              itemBuilder: (context, index) {
+                if (Platform.isIOS) {
+                  return CupertinoListTile(
+                    title: Text(list[index].id.toString()),
+                    onTap: () => bloc.add(ListEvent.select(list[index])),
+                  );
+                }
+
+                return ListTile(
+                  title: Text(list[index].title),
                   onTap: () => bloc.add(ListEvent.select(list[index])),
                 );
-              }
-
-              return ListTile(
-                title: Text(list[index].title),
-                onTap: () => bloc.add(ListEvent.select(list[index])),
-              );
-            },
-          ),
-        )
+              },
+            ),
+          )
       },
     );
   }

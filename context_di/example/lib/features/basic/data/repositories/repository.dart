@@ -38,7 +38,5 @@ const _mockList = [
 ];
 
 class SomeDataService {
-  void foo() {
-
-  }
+  void foo() {}
 }

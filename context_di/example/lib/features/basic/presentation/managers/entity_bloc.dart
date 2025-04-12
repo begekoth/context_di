@@ -16,7 +16,10 @@ class EntityBloc extends Bloc<EntityEvent, EntityState> {
       switch (event) {
         case _Started(:final id):
           if (await _repository.getEntity(id) case SomeEntity entity) {
-            emit(EntityState.loaded(title: entity.title, subtitle: entity.subtitle));
+            emit(EntityState.loaded(
+              title: entity.title,
+              subtitle: entity.subtitle,
+            ));
           }
       }
     });

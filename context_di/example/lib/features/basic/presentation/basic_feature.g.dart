@@ -8,7 +8,10 @@ part of 'basic_feature.dart';
 
 typedef CreateListBloc = ListBloc Function(BuildContext);
 
-typedef CreateEntityBloc = EntityBloc Function(BuildContext, ({int id}));
+typedef CreateEntityBloc = EntityBloc Function(BuildContext, EntityBlocParams);
+
+typedef CreateParamsConstructor = ParamsConstructor Function(
+    BuildContext, ({int id}));
 
 mixin _$BasicFeatureMixin on FeatureDependencies {
   @override
@@ -27,9 +30,15 @@ mixin _$BasicFeatureMixin on FeatureDependencies {
         ),
       ),
       registerParamsFactory(
-        (context, ({int id}) params) => EntityBloc(
+        (context, EntityBlocParams params) => EntityBloc(
           params.id,
           context.resolve(),
+        ),
+      ),
+      registerParamsFactory(
+        (context, ({int id}) params) => ParamsConstructor(
+          params.id,
+          context,
         ),
       ),
     ];

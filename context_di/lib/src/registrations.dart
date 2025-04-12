@@ -45,8 +45,7 @@ class FactoryRegistration<T> extends Registration {
   final Factory<T> factory;
 
   @override
-  Provider<Factory<T>> get provider =>
-      Provider(create: (_) => factory);
+  Provider<Factory<T>> get provider => Provider(create: (_) => factory);
 
   FactoryRegistration(this.factory);
 }
