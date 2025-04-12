@@ -91,6 +91,7 @@ abstract mixin class _$SelectCopyWith<$Res>
     implements $ListEventCopyWith<$Res> {
   factory _$SelectCopyWith(_Select value, $Res Function(_Select) _then) =
       __$SelectCopyWithImpl;
+
   @useResult
   $Res call({SomeEntity? entity});
 
@@ -182,6 +183,7 @@ class Loaded implements ListState {
       : _list = list;
 
   final List<SomeEntity> _list;
+
   @JsonKey()
   List<SomeEntity> get list {
     if (_list is EqualUnmodifiableListView) return _list;
@@ -223,6 +225,7 @@ class Loaded implements ListState {
 abstract mixin class $LoadedCopyWith<$Res> implements $ListStateCopyWith<$Res> {
   factory $LoadedCopyWith(Loaded value, $Res Function(Loaded) _then) =
       _$LoadedCopyWithImpl;
+
   @useResult
   $Res call({List<SomeEntity> list, SomeEntity? selected});
 

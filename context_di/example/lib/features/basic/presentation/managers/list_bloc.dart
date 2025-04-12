@@ -3,9 +3,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../domain/domain.dart';
 
+part 'list_bloc.freezed.dart';
 part 'list_event.dart';
 part 'list_state.dart';
-part 'list_bloc.freezed.dart';
 
 class ListBloc extends Bloc<ListEvent, ListState> {
   final RepositoryInterface _repository;

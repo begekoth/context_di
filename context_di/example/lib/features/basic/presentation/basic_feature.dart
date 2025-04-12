@@ -28,7 +28,6 @@ class BasicFeature extends FeatureDependencies with _$BasicFeatureMixin {
   const BasicFeature({super.key, super.builder, super.child});
 }
 
-
 class ParamsConstructor {
   final int id;
   final BuildContext c;

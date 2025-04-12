@@ -14,7 +14,7 @@ part of 'router.dart';
 /// [BasicFeaturePage]
 class BasicFeatureRoute extends PageRouteInfo<void> {
   const BasicFeatureRoute({List<PageRouteInfo>? children})
-    : super(BasicFeatureRoute.name, initialChildren: children);
+      : super(BasicFeatureRoute.name, initialChildren: children);
 
   static const String name = 'BasicFeatureRoute';
 
@@ -30,11 +30,11 @@ class BasicFeatureRoute extends PageRouteInfo<void> {
 /// [EntityPage]
 class EntityRoute extends PageRouteInfo<EntityRouteArgs> {
   EntityRoute({Key? key, required int id, List<PageRouteInfo>? children})
-    : super(
-        EntityRoute.name,
-        args: EntityRouteArgs(key: key, id: id),
-        initialChildren: children,
-      );
+      : super(
+          EntityRoute.name,
+          args: EntityRouteArgs(key: key, id: id),
+          initialChildren: children,
+        );
 
   static const String name = 'EntityRoute';
 
@@ -64,7 +64,7 @@ class EntityRouteArgs {
 /// [HomePage]
 class HomeRoute extends PageRouteInfo<void> {
   const HomeRoute({List<PageRouteInfo>? children})
-    : super(HomeRoute.name, initialChildren: children);
+      : super(HomeRoute.name, initialChildren: children);
 
   static const String name = 'HomeRoute';
 
@@ -80,7 +80,7 @@ class HomeRoute extends PageRouteInfo<void> {
 /// [ListPage]
 class ListRoute extends PageRouteInfo<void> {
   const ListRoute({List<PageRouteInfo>? children})
-    : super(ListRoute.name, initialChildren: children);
+      : super(ListRoute.name, initialChildren: children);
 
   static const String name = 'ListRoute';
 

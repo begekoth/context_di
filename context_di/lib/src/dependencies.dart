@@ -6,6 +6,7 @@ import 'registrations.dart';
 
 abstract class FeatureDependencies extends StatelessWidget {
   const FeatureDependencies({super.key, this.builder, this.child});
+
   final Widget Function(BuildContext, Widget?)? builder;
   final Widget? child;
 

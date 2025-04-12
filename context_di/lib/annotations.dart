@@ -1,6 +1,7 @@
 /// Annotation to mark a class as a feature
 class Feature {
   final bool generateFactoryTypes;
+
   const Feature({this.generateFactoryTypes = true});
 }
 
@@ -9,6 +10,7 @@ class Singleton {
   final Type type;
   final Type? as;
   final Function? dispose;
+
   const Singleton(this.type, {this.as, this.dispose});
 }
 
@@ -16,5 +18,6 @@ class Singleton {
 class Factory {
   final Type type;
   final Type? params;
+
   const Factory(this.type, {this.params});
 }

@@ -46,6 +46,7 @@ abstract mixin class $EntityEventCopyWith<$Res> {
   factory $EntityEventCopyWith(
           EntityEvent value, $Res Function(EntityEvent) _then) =
       _$EntityEventCopyWithImpl;
+
   @useResult
   $Res call({int id});
 }
@@ -111,6 +112,7 @@ abstract mixin class _$StartedCopyWith<$Res>
     implements $EntityEventCopyWith<$Res> {
   factory _$StartedCopyWith(_Started value, $Res Function(_Started) _then) =
       __$StartedCopyWithImpl;
+
   @override
   @useResult
   $Res call({int id});
@@ -220,6 +222,7 @@ abstract mixin class $LoadedCopyWith<$Res>
     implements $EntityStateCopyWith<$Res> {
   factory $LoadedCopyWith(Loaded value, $Res Function(Loaded) _then) =
       _$LoadedCopyWithImpl;
+
   @useResult
   $Res call({String title, String subtitle});
 }
