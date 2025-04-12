@@ -82,6 +82,8 @@ class AppFeature extends FeatureDependencies with _$AppFeatureMixin {
 }
 ```
 
+if clas has constructor with BuildContext parameter, context will be passed to constructor automatically
+
 # Resolve approach
 
 Now better approach is use code generation and resolve like this:
