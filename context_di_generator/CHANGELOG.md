@@ -1,3 +1,7 @@
+## 0.2.0
+updated analyzer version
+added top level factories generation
+
 ## 0.1.1
 
 refactoring

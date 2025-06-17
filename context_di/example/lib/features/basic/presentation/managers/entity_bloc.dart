@@ -11,7 +11,8 @@ part 'entity_state.dart';
 class EntityBloc extends Bloc<EntityEvent, EntityState> {
   final RepositoryInterface _repository;
 
-  EntityBloc(int id, this._repository) : super(const EntityState.initial()) {
+  EntityBloc(this._repository, {required int id})
+      : super(const EntityState.initial()) {
     on<EntityEvent>((event, emit) async {
       switch (event) {
         case _Started(:final id):

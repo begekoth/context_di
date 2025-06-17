@@ -1,4 +1,5 @@
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
 import 'package:context_di/annotations.dart';
@@ -18,25 +19,34 @@ class FeatureGenerator extends GeneratorForAnnotation<Feature> {
     }
 
     final buffer = StringBuffer();
+    final topLevelFactories = StringBuffer();
 
     if (annotation.read('generateFactoryTypes').boolValue) {
       for (final annotation in element.metadata) {
-        final type = annotation.element?.enclosingElement3?.displayName;
+        final type = annotation.element2?.enclosingElement2?.displayName;
 
         if (type == 'Factory') {
           final reader = ConstantReader(annotation.computeConstantValue());
           final typeValue = reader.read('type').typeValue.getDisplayString();
-          final paramsTypeValue =
-              reader.peek('params')?.typeValue.getDisplayString();
+          final typeElement = reader.read('type').typeValue.element3 as ClassElement2;
+          final paramsType = reader.peek('params')?.typeValue;
+          final paramsTypeValue = paramsType?.getDisplayString();
 
           if (paramsTypeValue != null) {
-            buffer.writeln(
-                "typedef Create${typeValue} = ${typeValue} Function(BuildContext, ${paramsTypeValue});\n");
-            continue;
+            buffer.writeln("typedef Create${typeValue} = ${typeValue} Function(BuildContext, ${paramsTypeValue});\n");
+            topLevelFactories.writeln("${typeValue} create${typeValue}(BuildContext context, ${paramsTypeValue} params) => ${typeValue}(");
+            topLevelFactories.writeln("  ${_generateConstructorParams(typeElement, typeValue, paramsType)},");
+            topLevelFactories.writeln(");\n");
+          } else {
+            buffer.writeln("typedef Create$typeValue = $typeValue Function(BuildContext);\n");
+            if (typeElement.constructors2.first.formalParameters.isEmpty) {
+              topLevelFactories.writeln("$typeValue create$typeValue(BuildContext context) => $typeValue();\n");
+            } else {
+              topLevelFactories.writeln("$typeValue create$typeValue(BuildContext context) => $typeValue(");
+              topLevelFactories.writeln("  ${_generateConstructorParams(typeElement, typeValue)},");
+              topLevelFactories.writeln(");\n");
+            }
           }
-
-          buffer.writeln(
-              "typedef Create$typeValue = $typeValue Function(BuildContext);\n");
         }
       }
     }
@@ -48,7 +58,7 @@ class FeatureGenerator extends GeneratorForAnnotation<Feature> {
 
     for (final annotation in element.metadata) {
       final reader = ConstantReader(annotation.computeConstantValue());
-      final type = annotation.element?.enclosingElement3?.displayName;
+      final type = annotation.element2?.enclosingElement2?.displayName;
       if (type == null) continue;
 
       switch (type) {
@@ -65,17 +75,16 @@ class FeatureGenerator extends GeneratorForAnnotation<Feature> {
     buffer.writeln('  }');
     buffer.writeln('}');
     buffer.writeln('');
+    buffer.writeln(topLevelFactories.toString());
 
     return buffer.toString();
   }
 
-  void _generateSingletonRegistration(
-      StringBuffer buffer, ConstantReader reader) {
+  void _generateSingletonRegistration(StringBuffer buffer, ConstantReader reader) {
     final typeValue = reader.read('type').typeValue.getDisplayString();
     final asValue = reader.peek('as')?.typeValue.getDisplayString();
-    final dispose =
-        reader.peek('dispose')?.objectValue.toFunctionValue()?.displayName;
-    final typeElement = reader.read('type').typeValue.element as ClassElement;
+    final dispose = reader.peek('dispose')?.objectValue.toFunctionValue2()?.displayName;
+    final typeElement = reader.read('type').typeValue.element3 as ClassElement2;
 
     if (asValue != null) {
       buffer.writeln('      registerSingletonAs<$typeValue, $asValue>(');
@@ -83,12 +92,11 @@ class FeatureGenerator extends GeneratorForAnnotation<Feature> {
       buffer.writeln('      registerSingleton(');
     }
 
-    if (typeElement.constructors.first.parameters.isEmpty) {
+    if (typeElement.constructors2.first.formalParameters.isEmpty) {
       buffer.writeln('        (context) => $typeValue(),');
     } else {
       buffer.writeln('        (context) => $typeValue(');
-      buffer.writeln(
-          '          ${_generateConstructorParams(typeElement, typeValue)},');
+      buffer.writeln('          ${_generateConstructorParams(typeElement, typeValue)},');
       buffer.writeln('        ),');
     }
 
@@ -98,18 +106,15 @@ class FeatureGenerator extends GeneratorForAnnotation<Feature> {
     buffer.writeln('      ),');
   }
 
-  void _generateFactoryRegistration(
-      StringBuffer buffer, ConstantReader reader) {
+  void _generateFactoryRegistration(StringBuffer buffer, ConstantReader reader) {
     final typeValue = reader.read('type').typeValue.getDisplayString();
     final paramsTypeValue = reader.peek('params')?.typeValue;
-    final typeElement = reader.read('type').typeValue.element as ClassElement;
+    final typeElement = reader.read('type').typeValue.element3 as ClassElement2;
 
     if (paramsTypeValue != null) {
       buffer.writeln('      registerParamsFactory(');
-      buffer
-          .writeln('        (context, $paramsTypeValue params) => $typeValue(');
-      buffer.writeln(
-          '          ${_generateConstructorParams(typeElement, typeValue, paramsTypeValue)},');
+      buffer.writeln('        (context, $paramsTypeValue params) => $typeValue(');
+      buffer.writeln('          ${_generateConstructorParams(typeElement, typeValue, paramsTypeValue)},');
       buffer.writeln('        ),');
       buffer.writeln('      ),');
       return;
@@ -117,42 +122,38 @@ class FeatureGenerator extends GeneratorForAnnotation<Feature> {
 
     buffer.writeln('      registerFactory(');
 
-    if (typeElement.constructors.first.parameters.isEmpty) {
+    if (typeElement.constructors2.first.formalParameters.isEmpty) {
       buffer.writeln('        (context) => $typeValue(),');
     } else {
       buffer.writeln('        (context) => $typeValue(');
-      buffer.writeln(
-          '          ${_generateConstructorParams(typeElement, typeValue)},');
+      buffer.writeln('          ${_generateConstructorParams(typeElement, typeValue)},');
       buffer.writeln('        ),');
     }
 
     buffer.writeln('      ),');
   }
 
-  String _generateConstructorParams(ClassElement element, String typeValue,
-      [DartType? paramsTypeValue]) {
+  String _generateConstructorParams(ClassElement2 element, String typeValue, [DartType? paramsTypeValue]) {
     final constructorName = typeValue.split('.').last;
-    final constructor = element.constructors
+    final constructor = element.constructors2
             .where(
-              (c) => c.name == constructorName,
+              (c) => c.displayName == constructorName,
             )
             .firstOrNull ??
-        element.constructors.first;
+        element.constructors2.first;
 
     final paramsFields = paramsTypeValue?.extractParamsFields();
 
-    String ifNamed(ParameterElement param, String value) {
-      return param.isNamed ? '${param.name}: $value' : value;
+    String ifNamed(FormalParameterElement param, String value) {
+      return param.isNamed ? '${param.displayName}: $value' : value;
     }
 
-    final params = constructor.parameters.map((param) {
-      if (param.type.element3?.name == 'BuildContext')
-        return ifNamed(param, 'context');
+    final params = constructor.formalParameters.map((param) {
+      if (param.type.element3?.displayName == 'BuildContext') return ifNamed(param, 'context');
 
       if (paramsFields != null) {
-        final paramName = param.name;
-        final publicName =
-            paramName.startsWith('_') ? paramName.substring(1) : paramName;
+        final paramName = param.displayName;
+        final publicName = paramName.startsWith('_') ? paramName.substring(1) : paramName;
         if (paramsFields.contains(publicName)) {
           paramsFields.remove(publicName);
           return ifNamed(param, 'params.$publicName');
@@ -162,8 +163,7 @@ class FeatureGenerator extends GeneratorForAnnotation<Feature> {
     }).join(',\n          ');
 
     if (paramsFields != null && paramsFields.isNotEmpty) {
-      throw Exception(
-          'Not found parameters: ${paramsFields.join(', ')} in constructor: $constructor');
+      throw Exception('Not found parameters: ${paramsFields.join(', ')} in constructor: \$constructor');
     }
 
     return params;
@@ -172,11 +172,8 @@ class FeatureGenerator extends GeneratorForAnnotation<Feature> {
 
 extension _ExtractParamsFields on DartType {
   Set<String> extractParamsFields() => switch (this) {
-        RecordType(:final namedFields) =>
-          namedFields.map((e) => e.name).toSet(),
-        InterfaceType(:final element) when element is ClassElement =>
-          element.fields.map((e) => e.name).toSet(),
-        _ => throw Exception(
-            'Unsupported params type $this can be a class or record type, not: ${this.element}')
+        RecordType(:final namedFields) => namedFields.map((e) => e.name).toSet(),
+        InterfaceType(:final element3) when element3 is ClassElement2 => element3.fields2.map((e) => e.displayName).toSet(),
+        _ => throw Exception('Unsupported params type \$this can be a class or record type, not: \${this.element}')
       };
 }
