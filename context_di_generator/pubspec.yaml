@@ -1,6 +1,6 @@
 name: context_di_generator
 description: "Flutter Provider based Dependency Injection Tool Generator"
-version: ^0.2.5
+version: 0.2.5
 homepage: https://github.com/begekoth/context_di
 
 environment:
