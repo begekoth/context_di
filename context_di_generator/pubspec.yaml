@@ -11,4 +11,4 @@ dependencies:
   context_di: ^0.2.4
   source_gen: ^3.0.0
   build: ^3.0.0
-  analyzer: ^8.0.0
+  analyzer: ^7.4.5
