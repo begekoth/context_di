@@ -1,4 +1,4 @@
-import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
 import 'package:context_di/annotations.dart';
@@ -7,11 +7,11 @@ import 'package:source_gen/source_gen.dart';
 class FeatureGenerator extends GeneratorForAnnotation<Feature> {
   @override
   String generateForAnnotatedElement(
-    Element element,
+    Element2 element,
     ConstantReader annotation,
     BuildStep buildStep,
   ) {
-    if (element is! ClassElement) {
+    if (element is! ClassElement2) {
       throw InvalidGenerationSourceError(
         'Feature annotation can only be applied to classes.',
       );
@@ -21,7 +21,7 @@ class FeatureGenerator extends GeneratorForAnnotation<Feature> {
     final topLevelFactories = StringBuffer();
 
     if (annotation.read('generateFactoryTypes').boolValue) {
-      for (final annotation in element.metadata.annotations) {
+      for (final annotation in element.metadata2.annotations) {
         final type = annotation.element2?.enclosingElement2?.displayName;
 
         if (type == 'Factory') {
@@ -50,12 +50,12 @@ class FeatureGenerator extends GeneratorForAnnotation<Feature> {
       }
     }
 
-    buffer.writeln('mixin _\$${element.name}Mixin on FeatureDependencies {');
+    buffer.writeln('mixin _\$${element.name3}Mixin on FeatureDependencies {');
     buffer.writeln('  @override');
     buffer.writeln('  List<Registration> register() {');
     buffer.writeln('    return [');
 
-    for (final annotation in element.metadata.annotations) {
+    for (final annotation in element.metadata2.annotations) {
       final reader = ConstantReader(annotation.computeConstantValue());
       final type = annotation.element2?.enclosingElement2?.displayName;
       if (type == null) continue;
