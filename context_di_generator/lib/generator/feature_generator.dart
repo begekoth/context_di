@@ -1,5 +1,4 @@
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/element2.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
 import 'package:context_di/annotations.dart';
@@ -22,7 +21,7 @@ class FeatureGenerator extends GeneratorForAnnotation<Feature> {
     final topLevelFactories = StringBuffer();
 
     if (annotation.read('generateFactoryTypes').boolValue) {
-      for (final annotation in element.metadata) {
+      for (final annotation in element.metadata.annotations) {
         final type = annotation.element2?.enclosingElement2?.displayName;
 
         if (type == 'Factory') {
@@ -56,7 +55,7 @@ class FeatureGenerator extends GeneratorForAnnotation<Feature> {
     buffer.writeln('  List<Registration> register() {');
     buffer.writeln('    return [');
 
-    for (final annotation in element.metadata) {
+    for (final annotation in element.metadata.annotations) {
       final reader = ConstantReader(annotation.computeConstantValue());
       final type = annotation.element2?.enclosingElement2?.displayName;
       if (type == null) continue;
