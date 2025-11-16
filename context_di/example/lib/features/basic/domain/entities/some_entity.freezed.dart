@@ -16,9 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SomeEntity {
   int get id;
-
   String get title;
-
   String get subtitle;
 
   /// Create a copy of SomeEntity
@@ -53,7 +51,6 @@ abstract mixin class $SomeEntityCopyWith<$Res> {
   factory $SomeEntityCopyWith(
           SomeEntity value, $Res Function(SomeEntity) _then) =
       _$SomeEntityCopyWithImpl;
-
   @useResult
   $Res call({int id, String title, String subtitle});
 }
@@ -137,7 +134,6 @@ abstract mixin class _$SomeEntityCopyWith<$Res>
   factory _$SomeEntityCopyWith(
           _SomeEntity value, $Res Function(_SomeEntity) _then) =
       __$SomeEntityCopyWithImpl;
-
   @override
   @useResult
   $Res call({int id, String title, String subtitle});

@@ -31,8 +31,8 @@ mixin _$BasicFeatureMixin on FeatureDependencies {
       ),
       registerParamsFactory(
         (context, EntityBlocParams params) => EntityBloc(
-          params.id,
           context.resolve(),
+          id: params.id,
         ),
       ),
       registerParamsFactory(
@@ -44,3 +44,20 @@ mixin _$BasicFeatureMixin on FeatureDependencies {
     ];
   }
 }
+
+ListBloc createListBloc(BuildContext context) => ListBloc(
+      context.resolve(),
+    );
+
+EntityBloc createEntityBloc(BuildContext context, EntityBlocParams params) =>
+    EntityBloc(
+      context.resolve(),
+      id: params.id,
+    );
+
+ParamsConstructor createParamsConstructor(
+        BuildContext context, ({int id}) params) =>
+    ParamsConstructor(
+      params.id,
+      context,
+    );

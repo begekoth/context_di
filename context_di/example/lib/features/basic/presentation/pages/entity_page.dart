@@ -14,8 +14,7 @@ class EntityPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<EntityBloc>(
-      create: (_) =>
-          context.read<CreateEntityBloc>()(context, EntityBlocParams(_id)),
+      create: (_) => createEntityBloc(context, EntityBlocParams(_id)),
       child: BlocBuilder<EntityBloc, EntityState>(builder: (context, state) {
         return Scaffold(
           body: switch (state) {

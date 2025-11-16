@@ -28,6 +28,8 @@ Parameterized factories
 ```dart
 
 final bloc = context.read<CreateEntityBloc>()(context, (id: _id));
+//or
+final bloc = createEntityBloc(context, (id: _id));
 ```
 
 Scopes based on widget tree lifecycle:
@@ -105,7 +107,11 @@ factories:
 final bloc = context.read<CreateListBloc>()(context);
 
 final bloc = context.read<CreateEntityBloc>()(context, (id: _id));
+
+//new preferred way
+final bloc = createEntityBloc(context, (id: _id));
 ```
+`createEntityBloc` generated top level function
 
 `CreateListBloc` and `CreateEntityBloc` will be generated
 
@@ -186,7 +192,8 @@ class _ContentState extends State<_Content> {
   @override
   void initState() {
     _listBloc = context.resolve<ListBloc>(); //old approach
-    _listBloc = context.read<CreateListBloc>()(context); //new approach
+    _listBloc = context.read<CreateListBloc>()(context); //old approach
+    _listBloc = createListBloc(context); //new approach
     super.initState();
   }
 
@@ -229,7 +236,8 @@ basic resolve
 ```dart
 
 final listBloc = context.resolve<ListBloc>(); //old approach
-final listBloc = context.read<CreateListBloc>()(context); //new approach
+final listBloc = context.read<CreateListBloc>()(context); //old approach
+final listBloc = createListBloc(context); //new approach
 ```
 
 parametrized resolve
@@ -237,7 +245,8 @@ parametrized resolve
 ```dart
 
 var create = (_) => context.resolveWithParams((id: _id)); //old approach
-var create = (_) => context.read<CreateEntityBloc>()(context, (id: _id)); //new approach
+var create = (_) => context.read<CreateEntityBloc>()(context, (id: _id)); //old approach
+var create = (_) => createEntityBloc(context, (id: _id)); //new approach
 ```
 
 ## Additional information
